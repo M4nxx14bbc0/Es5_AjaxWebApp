@@ -1,0 +1,23 @@
+{
+  "name": "es5_ajaxwebapp",
+  "version": "1.0.0",
+  "description": "Sviluppare un'interfaccia web per la registrazione e il login di un utente.\r Nello specifico la pagina dovrà prevedere due aree di testo (username e password) e due pulsanti (registra e login)\r Alla pressione di uno dei due pulsanti verrà visualizzato un messaggio verde se la richiesta è andata a buon fine o un messaggio rosso se c'è stato un errore.",
+  "main": "backend/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M4nxx14bbc0/Es5_AjaxWebApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/M4nxx14bbc0/Es5_AjaxWebApp/issues"
+  },
+  "homepage": "https://github.com/M4nxx14bbc0/Es5_AjaxWebApp#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "fs": "0.0.1-security"
+  }
+}
