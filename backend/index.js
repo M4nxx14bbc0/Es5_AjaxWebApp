@@ -13,13 +13,13 @@ apiServer.get("/", (request, response)=>{
 });
 
 apiServer.get("/login", (request, response)=>{
-    fs.readFile("users.json", (err, data)=>{
+    fs.readFile("backend\\users.json", (err, data)=>{
         if(err){
             console.log();
             response.send("<h3>Internal server error</h3>");
         } else {
             var users = JSON.parse(data);
-            var t1 = users.find(x => x.user==request.query.user);
+            var t1 = users.find(x => x.usrn==request.query.usrn);
             var t2 = users.find(x => x.pswd==request.query.pswd);
             if(t1==t2){
                 response.send("<h3>Checked</h3>");
@@ -30,22 +30,22 @@ apiServer.get("/login", (request, response)=>{
     });
 });
 
-apiServer.get("/addUser",  (request, response)=>{
-    var user = request.query.user;
+apiServer.get("/register",  (request, response)=>{
+    var usrn = request.query.usrn;
     var pswd = request.query.pswd;
-    fs.readFile("users.json", (err, data) => {
+    fs.readFile("backend/users.json", (err, data) => {
         if(err){
             console.log("Errore "+ err);
             response.send("<body>ERROR<br>Cannot read user</body>");
         } else {
             var users = JSON.parse(data);
-            if(students.find(x => x.user==user)!== undefined){
+            if(users.find(x => x.usrn==usrn) !== undefined){
                 var newUser = {
-                    "user": user,
+                    "usrn": usrn,
                     "pswd": pswd,
-                }
+                };
                 users.push(newUser);
-                fs.writeFile("users.json", JSON.stringify(users), (err) =>{
+                fs.writeFile("users.json", JSON.stringify(users, null, users.length+2), (err) =>{
                     if(err){
                         console.log("Errore "+ err);
                         response.send("<body>ERROR<br>Cannot save user</body>");

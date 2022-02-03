@@ -18,6 +18,6 @@
   "homepage": "https://github.com/M4nxx14bbc0/Es5_AjaxWebApp#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "fs": "0.0.1-security"
+    "fs": "^0.0.1-security"
   }
 }
