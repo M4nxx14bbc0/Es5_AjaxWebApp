@@ -11,46 +11,43 @@
         </fieldset>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            var format = (str)=>{
-                var usrn = $('#usrn').val();
-                var pswd = $('#pswd').val();
-                if(str=='login'){
-                    $.ajax({
-                        url : "http://localhost:3000/login?usrn="+usrn+"&pswd="+pswd,
-                        method : 'GET',
-                        contentType : 'application/json',
-                        dataType : 'json',
-                        success : function(data, textStatus){
+            var httpRequest;
+            var yy = $("#login").click(()=>{
+                var user = $('#usrn').val();
+                var pass = $('#pswd').val();
+                console.log("Username : ", user);
+                console.log("Password : ",pass);
+                makeRequest(user, pass, 'login');
+            });
 
-                        },
-                        error : function(xhr, textStatus, error){
+            var xx = $("#register").click(()=>{
+                var user = $('#usrn').val();
+                var pass = $('#pswd').val();
+                console.log("Username : ", user);
+                console.log("Password : ",pass);
+                makeRequest(user, pass, 'register');
+            });
 
-                        }
-                    });
+            function makeRequest(user, pass, resource){
+                httpRequest = new XMLHttpRequest();
+                if(!httpRequest){
+                    alert('Giving up :( Cannot create an XMLHTTP instance');
                 } else {
-                    $.ajax({
-                        url : "http://localhost:3000/register?usrn="+usrn+"&pswd="+pswd,
-                        method : 'GET',
-                        contentType : 'application/json',
-                        dataType : 'json',
-                        success : function(data, textStatus){
-                            
-                        },
-                        error : function(xhr, textStatus, error){
-                            
-                        }
-                    });
+                    httpRequest.onreadystatechange = alertContents;
+                    httpRequest.open('GET', 'http://localhost:3000/'+resource);
+                    httpRequest.setRequestHeader('Content-Type','application/json');
+                    httpRequest.send('user='+encodeURIComponent(user)+'&pass='+encodeURIComponent(pass));
                 }
-            };
-
-            $('#login').on('click', (str) => {
-                str = 'login'
-                format(str);
-            });
-            $('#login').on('click', (str)=>{
-                str = 'register'
-                format(str);
-            });
+            }
+            function alertContents(){
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    alert(httpRequest.responseText);
+                } else {
+                    alert('There was a problem with the request.');
+                }
+                }
+            }
         </script>
     </body>
 </html>
