@@ -5,9 +5,52 @@
     <body>
         <fieldset>
             <p><h3>Login and register</h3></p>
-            <p>Username : <input type="text" name="usrn" id="usrn"></p>
-            <p>Username : <input type="password" name="usrn" id="usrn"></p>
-            <p><button type="submit" name="login" id="login">Send</button> <button type="submit" name="register" id="register"></button></p>
+            <p>Username : <input type="text" name="usrn" id="usrn" value="gyugfw"></p>
+            <p>Password : <input type="password" name="pswd" id="pswd"></p>
+            <p><button type="submit" name="submit" id="login">Send</button> <button type="submit" name="submit" id="register">Register</button></p>
         </fieldset>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            var format = (str)=>{
+                var usrn = $('#usrn').val();
+                var pswd = $('#pswd').val();
+                if(str=='login'){
+                    $.ajax({
+                        url : "http://localhost:3000/login?usrn="+usrn+"&pswd="+pswd,
+                        method : 'GET',
+                        contentType : 'application/json',
+                        dataType : 'json',
+                        success : function(data, textStatus){
+
+                        },
+                        error : function(xhr, textStatus, error){
+
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url : "http://localhost:3000/register?usrn="+usrn+"&pswd="+pswd,
+                        method : 'GET',
+                        contentType : 'application/json',
+                        dataType : 'json',
+                        success : function(data, textStatus){
+                            
+                        },
+                        error : function(xhr, textStatus, error){
+                            
+                        }
+                    });
+                }
+            };
+
+            $('#login').on('click', (str) => {
+                str = 'login'
+                format(str);
+            });
+            $('#login').on('click', (str)=>{
+                str = 'register'
+                format(str);
+            });
+        </script>
     </body>
 </html>

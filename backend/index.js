@@ -22,12 +22,14 @@ apiServer.get("/login", (request, response)=>{
             var t1 = users.find(x => x.user==request.query.user);
             var t2 = users.find(x => x.pswd==request.query.pswd);
             if(t1==t2){
-                response.send("<h3>Checked</h3>");
+                response.send("<h3>Checked</h3>")
+                response;
             } else {
                 response.send("<h3>Wrong crdentials</h3>");
             }
         }
-    })
+    });
+    fs.close(2);
 });
 
 apiServer.get("/addUser",  (request, response)=>{
