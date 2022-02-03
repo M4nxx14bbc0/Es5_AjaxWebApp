@@ -13,9 +13,8 @@ apiServer.get("/", (request, response)=>{
 });
 
 apiServer.get("/login", (request, response)=>{
-    fs.readFile("backend\\users.json", (err, data)=>{
+    fs.readFile("backend/users.json", (err, data)=>{
         if(err){
-            console.log();
             response.send("<h3>Internal server error</h3>");
         } else {
             var users = JSON.parse(data);
