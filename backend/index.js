@@ -18,7 +18,6 @@ apiServer.get("/login", (request, response)=>{
             response.send("<h3>Internal server error</h3>");
         } else {
             var users = JSON.parse(data);
-            console.log("Users: ", users);
             var t1 = users.find(x => x.usrn==request.query.usrn);
             var t2 = users.find(x => x.pswd==request.query.pswd);
             if(t1==t2){
@@ -39,18 +38,19 @@ apiServer.get("/register",  (request, response)=>{
             response.send("<body>ERROR<br>Cannot read user</body>");
         } else {
             var users = JSON.parse(data);
-            if(users.find(x => x.usrn==usrn) !== undefined){
+            console.log(users.find(x => x.usrn==usrn));
+            if(users.find(x => x.usrn==usrn) === undefined){
                 var newUser = {
                     "usrn": usrn,
                     "pswd": pswd,
                 };
                 users.push(newUser);
-                fs.writeFile("users.json", JSON.stringify(users, null, users.length+2), (err) =>{
+                fs.writeFile("backend/users.json", JSON.stringify(users, null, users.length+2), (err) =>{
                     if(err){
                         console.log("Errore "+ err);
                         response.send("<body>ERROR<br>Cannot save user</body>");
                     } else {
-                        console.log(students);
+                        console.log(users);
                         response.send("<h3>Registered new user</h3>");
                     }
                 });
