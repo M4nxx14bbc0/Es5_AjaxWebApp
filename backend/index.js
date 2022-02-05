@@ -18,6 +18,7 @@ apiServer.get("/login", (request, response)=>{
             response.send("<h3>Internal server error</h3>");
         } else {
             var users = JSON.parse(data);
+            console.log("Users: ", users);
             var t1 = users.find(x => x.usrn==request.query.usrn);
             var t2 = users.find(x => x.pswd==request.query.pswd);
             if(t1==t2){
