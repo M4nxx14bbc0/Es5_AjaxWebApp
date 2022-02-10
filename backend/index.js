@@ -15,15 +15,15 @@ apiServer.get("/", (request, response)=>{
 apiServer.get("/login", (request, response)=>{
     fs.readFile("backend/users.json", (err, data)=>{
         if(err){
-            response.send("<h3>Internal server error</h3>");
+            response.sendStatus(500);
         } else {
             var users = JSON.parse(data);
             var t1 = users.find(x => x.usrn==request.query.usrn);
             var t2 = users.find(x => x.pswd==request.query.pswd);
-            if(t1==t2){
-                response.send("<h3>Checked</h3>");
+            if(t1==t2 && t1 !== undefined && t2 !== undefined){
+                response.sendStatus(200);
             } else {
-                response.send("<h3>Wrong crdentials</h3>");
+                response.sendStatus(404);
             }
         }
     });
