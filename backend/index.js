@@ -16,6 +16,7 @@ apiServer.get("/", (request, response)=>{
 });
 
 apiServer.get("/api/login", (request, response)=>{
+    console.log("Request: ", request.query);
     fs.readFile("backend/users.json", (err, data)=>{
         if(err){
             response.sendStatus(500);
