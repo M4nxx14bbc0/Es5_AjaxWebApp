@@ -1,6 +1,7 @@
 var express = require("express");
 var apiServer = express();
 var fs = require("fs");
+var cors = require("cors");
 
 var port = 3000;
 var host = "localhost";
@@ -8,11 +9,13 @@ apiServer.listen(port, host, () => {
     console.log("Server running at http://%s:%d", host, port);
 });
 
+apiServer.use(cors());
+
 apiServer.get("/", (request, response)=>{
     response.send("Ciao client sei in home");
 });
 
-apiServer.get("/login", (request, response)=>{
+apiServer.get("/api/login", (request, response)=>{
     fs.readFile("backend/users.json", (err, data)=>{
         if(err){
             response.sendStatus(500);
@@ -29,7 +32,7 @@ apiServer.get("/login", (request, response)=>{
     });
 });
 
-apiServer.get("/register",  (request, response)=>{
+apiServer.get("/api/register",  (request, response)=>{
     var usrn = request.query.usrn;
     var pswd = request.query.pswd;
     fs.readFile("backend/users.json", (err, data) => {
