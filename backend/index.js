@@ -2,6 +2,7 @@ var express = require("express");
 var apiServer = express();
 var fs = require("fs");
 var cors = require("cors");
+//require("dotenv").config();
 const mysql = require("mysql2");
 
 var port = 3000;
@@ -25,11 +26,11 @@ apiServer.get("/", (request, response)=>{
 
 apiServer.get("/mysql/login",  (request, response)=>{
     console.log("Request: ", request.query);
-    conn.execute(
+    conn.query(
         'SELECT * FROM c188_prm_5AI_2122.user WHERE mail="'+request.query.mail+'" AND pass="'+request.query.pass+'";',
-        (err, fields)=>{
+        (err, result)=>{
             console.error('Errore: ', err);
-            console.log('Successo: ', fields);
+            console.log('Successo: ', result);
         }
     );
     response.setHeader('Content-Type', 'application/json');
