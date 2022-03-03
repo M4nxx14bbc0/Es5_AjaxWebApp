@@ -2,7 +2,7 @@ var express = require("express");
 var apiServer = express();
 var fs = require("fs");
 var cors = require("cors");
-//require("dotenv").config();
+require("dotenv").config();
 const mysql = require("mysql2");
 
 var port = 3000;
@@ -11,11 +11,11 @@ apiServer.listen(port, host, () => {
     console.log("Server running at http://%s:%d", host, port);
 });
 
-const conn = mysql.createConnection({
-    host: 'parrarodriguez.manue.tave.osdb.it',
-    user: 'c188_prm_5AI',
-    password: 'Az-52761',
-    database: 'c188_prm_5AI_2122'
+const connection = mysql.createConnection({
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DATABASE,
+    password: process.env.PASSWORD,
 });
 
 apiServer.use(cors());
@@ -24,19 +24,21 @@ apiServer.get("/", (request, response)=>{
     response.send("Ciao client sei in home");
 });
 
-apiServer.get("/mysql/login",  (request, response)=>{
+apiServer.get("/api/login",  (request, response)=>{
     console.log("Request: ", request.query);
+    response.setHeader('Content-Type','application/json');
     conn.query(
-        'SELECT * FROM c188_prm_5AI_2122.user WHERE mail="'+request.query.mail+'" AND pass="'+request.query.pass+'";',
+        'SELECT count(*) AS utenti FROM c188_prm_5AI_2122.user WHERE mail="'+request.query.mail+'" AND pass="'+request.query.pass+'";',
         (err, result)=>{
-            console.error('Errore: ', err);
-            console.log('Successo: ', result);
+            if(result[0].utenti==1)
+                response.json({message:'Login effetuato!'}).sendStatus(200);
+            else
+                response.json({message:'Login fallito!'}).sendStatus(400);
         }
     );
-    response.setHeader('Content-Type', 'application/json');
-    response.json({message: 'Successful!'}).sendStatus(200);
 });
 
+/*
 apiServer.get("/api/login", (request, response)=>{
     console.log("Request: ", request.query);
     fs.readFile("backend/users.json", (err, data)=>{
@@ -87,3 +89,4 @@ apiServer.get("/api/register",  (request, response)=>{
     });
     fs.close(2);
 });
+*/

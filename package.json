@@ -18,6 +18,7 @@
   "homepage": "https://github.com/M4nxx14bbc0/Es5_AjaxWebApp#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "fs": "0.0.1-security",
     "mysql2": "^2.3.3"
