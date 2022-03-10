@@ -5,14 +5,6 @@
 <html>
     <head>
         <title>My login index</title>
-        <style>
-            .green {
-                background-color: green;
-            }
-            .red {
-                background-color: red;
-            }
-        </style>
     </head>
     <body>
         <h1>Inserire email e password</h1>
@@ -33,12 +25,12 @@
                         query: "",
                         method: "GET",
                         success: (data)=>{
-                            $('body').toggleClass("green");
-                            $('body').toggleClass("red", false);
+                            $('body').css("background-color", "red");
+                            window.location.href="home.html";
+                            window.location.replace("home.html"); //rimuove dalla storia di navigazione
                         },
                         error: (err)=>{
-                            $('body').toggleClass("green", false);
-                            $('body').toggleClass("red")
+                            $('body').css("background-color", "red");
                         }
                     });
                 }

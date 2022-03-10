@@ -26,69 +26,46 @@ apiServer.get("/", (request, response)=>{
 
 apiServer.get("/api/login",  (request, response)=>{
     console.log("Request: ", request.query);
-    response.setHeader('Content-Type','application/json');
+    conn.query(
+        'SELECT count(*) AS utenti FROM c188_prm_5AI_2122.user WHERE mail="?" AND pass="?";',
+        [request.query.mail, request.query.pass],
+        (err, result)=>{
+            console.log("Analysis: ", err, result);
+            response.setHeader("Content-Type", "application/json");
+            if(result[0].utenti==1)
+                response.sendStatus(200).json({message:'Successful Sign In!'});
+            else
+                response.sendStatus(400).json({message:'Failed To Sign In!'});
+        }
+    );
+});
+apiServer.get("/api/register",  (request, response)=>{
+    console.log("Request: ", request.query);
+    conn.query(
+        'INSERT INTO c188_prm_5AI_2122.user VALUES (?, ?);',
+        [request.query.mail, request.query.pass],
+        (err, result)=>{
+            console.log("Analysis: ", err);
+            response.setHeader("Content-Type", "application/json");
+            if(err==null)
+                response.sendStatus(200).json({message:'Successful Sign Up!'});
+            else
+                response.sendStatus(400).json({message:'Failed To Sign In!'});
+        }
+    );
+});
+apiServer.get("/api/marks",  (request, response)=>{
+    console.log("Request: ", request.query);
     conn.query(
         'SELECT count(*) AS utenti FROM c188_prm_5AI_2122.user WHERE mail="?" AND pass="?";',
         [request.query.mail, request.query.pass],
         (err, result)=>{
             console.log(result);
+            response.setHeader("Content-Type", "application/json");
             if(result[0].utenti==1)
-                response.json({message:'Login effetuato!'}).sendStatus(200);
+                response.sendStatus(200).json({message:'Login effetuato!'});
             else
-                response.json({message:'Login fallito!'}).sendStatus(400);
+                response.sendStatus(400).json({message:'Login fallito!'});
         }
     );
 });
-
-/*
-apiServer.get("/api/login", (request, response)=>{
-    console.log("Request: ", request.query);
-    fs.readFile("backend/users.json", (err, data)=>{
-        if(err){
-            response.sendStatus(500);
-        } else {
-            var users = JSON.parse(data);
-            var t1 = users.find(x => x.usrn==request.query.usrn);
-            var t2 = users.find(x => x.pswd==request.query.pswd);
-            if(t1==t2 && t1 !== undefined && t2 !== undefined){
-                response.sendStatus(200);
-            } else {
-                response.sendStatus(404);
-            }
-        }
-    });
-});
-
-apiServer.get("/api/register",  (request, response)=>{
-    var usrn = request.query.usrn;
-    var pswd = request.query.pswd;
-    fs.readFile("backend/users.json", (err, data) => {
-        if(err){
-            console.log("Errore "+ err);
-            response.send("<body>ERROR<br>Cannot read user</body>");
-        } else {
-            var users = JSON.parse(data);
-            console.log(users.find(x => x.usrn==usrn));
-            if(users.find(x => x.usrn==usrn) === undefined){
-                var newUser = {
-                    "usrn": usrn,
-                    "pswd": pswd,
-                };
-                users.push(newUser);
-                fs.writeFile("backend/users.json", JSON.stringify(users, null, users.length+2), (err) =>{
-                    if(err){
-                        console.log("Errore "+ err);
-                        response.send("<body>ERROR<br>Cannot save user</body>");
-                    } else {
-                        console.log(users);
-                        response.send("<h3>Registered new user</h3>");
-                    }
-                });
-            } else {
-                response.send("<h3>ERROR<br>User already exists</h3>");
-            }
-        }
-    });
-    fs.close(2);
-});
-*/
