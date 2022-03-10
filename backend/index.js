@@ -1,8 +1,6 @@
 var express = require("express");
 var apiServer = express();
-var fs = require("fs");
 var cors = require("cors");
-require("dotenv").config();
 const mysql = require("mysql2");
 
 var port = 3000;
