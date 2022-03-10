@@ -11,11 +11,11 @@ apiServer.listen(port, host, () => {
     console.log("Server running at http://%s:%d", host, port);
 });
 
-const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    database: process.env.DATABASE,
-    password: process.env.PASSWORD,
+const conn = mysql.createConnection({
+    host: 'parrarodriguez.manue.tave.osdb.it',
+    user: 'c188_prm_5AI',
+    database: 'c188_prm_5AI_2122',
+    password: 'Az-52761'
 });
 
 apiServer.use(cors());
@@ -28,8 +28,10 @@ apiServer.get("/api/login",  (request, response)=>{
     console.log("Request: ", request.query);
     response.setHeader('Content-Type','application/json');
     conn.query(
-        'SELECT count(*) AS utenti FROM c188_prm_5AI_2122.user WHERE mail="'+request.query.mail+'" AND pass="'+request.query.pass+'";',
+        'SELECT count(*) AS utenti FROM c188_prm_5AI_2122.user WHERE mail="?" AND pass="?";',
+        [request.query.mail, request.query.pass],
         (err, result)=>{
+            console.log(result);
             if(result[0].utenti==1)
                 response.json({message:'Login effetuato!'}).sendStatus(200);
             else

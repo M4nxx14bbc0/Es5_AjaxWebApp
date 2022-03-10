@@ -4,7 +4,8 @@
   "description": "Sviluppare un'interfaccia web per la registrazione e il login di un utente.\r Nello specifico la pagina dovrà prevedere due aree di testo (username e password) e due pulsanti (registra e login)\r Alla pressione di uno dei due pulsanti verrà visualizzato un messaggio verde se la richiesta è andata a buon fine o un messaggio rosso se c'è stato un errore.",
   "main": "backend/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/index.js"
   },
   "repository": {
     "type": "git",
